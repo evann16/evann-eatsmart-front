@@ -28,7 +28,16 @@ interface Articles {
   }
 ]
 
-for (let plat of plats) {
-  console.log(plat);
+const appDiv = document.querySelector<HTMLDivElement>('#app');
+
+const listePlats = plats.map(p => 
+`<div class="card">
+  <h3>${p.nom}</h3>
+  <p>${p.description}</p>
+  <strong><p>Prix : ${p.prix}€</p></strong>
+</div>`
+).join('');
+
+if (appDiv) {
+  appDiv.innerHTML = listePlats;
 }
- 
