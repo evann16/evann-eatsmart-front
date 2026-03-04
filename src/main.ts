@@ -1,3 +1,5 @@
+import './style.css'
+
 interface Articles {
   id_article: number;
   nom: string;
