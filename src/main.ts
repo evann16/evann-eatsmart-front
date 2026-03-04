@@ -39,5 +39,11 @@ const listePlats = plats.map(p =>
 ).join('');
 
 if (appDiv) {
-  appDiv.innerHTML = listePlats;
+  appDiv.innerHTML = `
+  <header>
+    <h1>EatSmart - Carte du Restaurant</h1>
+  </header>
+  <main class="menu-container">
+    ${listePlats}
+  </main>`
 }
