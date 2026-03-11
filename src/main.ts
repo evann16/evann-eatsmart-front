@@ -5,6 +5,7 @@ interface Articles {
   nom: string;
   prix: number;
   description: string; 
+  image: string;
 }
 
 async function getTableau<T>(url: string): Promise<T[]> {
@@ -21,6 +22,7 @@ async function init() {
 
   const listePlats = articlesData.map(p => 
   `<div class="card">
+    <img id="img" src="${p.image}">
     <h3>${p.nom}</h3>
     <p>${p.description}</p>
     <strong><p>Prix : ${p.prix}€</p></strong>
