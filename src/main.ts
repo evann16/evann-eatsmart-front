@@ -30,12 +30,35 @@ async function init() {
   if (appDiv) {
     appDiv.innerHTML = `
     <header>
-      <h1>EatSmart - Carte du Restaurant</h1>
+      <h1 style="display:inline">EatSmart - Carte du Restaurant</h1>
+      <input type="search" id="search" name="search"/>
     </header>
     <main class="menu-container">
       ${listePlats}
     </main>`
   }
+  const search = document.querySelector<HTMLInputElement>('#search');
+
+  search?.addEventListener('input', () => {
+
+    const valeur = search.value.toLowerCase();
+
+    const cards = document.querySelectorAll<HTMLDivElement>('.card');
+
+    cards.forEach(card => {
+
+      const nom = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+
+      if (nom.includes(valeur)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+
+    });
+
+  });
+
 }
 
 init();
