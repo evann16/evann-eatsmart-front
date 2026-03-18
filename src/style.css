@@ -4,7 +4,6 @@
 .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; width: 250px; }
 .btn-order { background-color: #27ae60; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
 .sold-out { color: #e74c3c; font-weight: bold; }
-
 .menu-container {
   display: grid;
   /* Crée autant de colonnes de 250px que possible */
@@ -27,6 +26,7 @@
     position: sticky; /* Le panier reste visible au scroll */
     top: 20px;
 }
+
 .cart-item {
     display: flex;
     justify-content: space-between;

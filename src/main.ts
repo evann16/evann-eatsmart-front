@@ -26,6 +26,7 @@ async function getObjet<O>(url: string): Promise<O> {
 }
 
 async function init() {
+
   console.log("Chargement des données...");
 
   const articlesData = await getTableau<Articles>('http://localhost/eatsmart-evann/evann-api-eatsmart/articles');
@@ -43,6 +44,8 @@ async function init() {
   //       return `<strong><p>Prix : ${p.prix}€</p></strong>`
   //     }
   // });
+
+  let panier: Articles[] = [];
 
   const listePlats = articlesData.map(p => 
   `<div class="card">
@@ -79,8 +82,6 @@ async function init() {
 
   }
   
-  let panier: Articles[] = [];
-
   const tousLesBoutons = document.querySelectorAll<HTMLButtonElement>('.btn-order');
 
   tousLesBoutons.forEach((btn, index) => {
@@ -92,6 +93,20 @@ async function init() {
       panier.push(articlesData[index]);
 
       console.log(`Panier = `, panier);
+
+      const panierArticles = document.querySelector<HTMLDivElement>('#cart-items');
+      
+      const ajoutArticles = panier.map(p =>
+        `
+        <p>${p.nom} : ${p.prix} €</p>
+        `
+      ).join('');
+
+      if (panierArticles){
+        panierArticles.innerHTML= `
+          ${ajoutArticles} 
+        `
+      }
     
     });
   
