@@ -8,7 +8,19 @@ interface Articles {
   image: string;
 }
 
+interface Message {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 async function getTableau<T>(url: string): Promise<T[]> {
+  const res = await fetch(url);
+  return await res.json();
+}
+
+async function getObjet<O>(url: string): Promise<O> {
   const res = await fetch(url);
   return await res.json();
 }
@@ -18,25 +30,38 @@ async function init() {
 
   const articlesData = await getTableau<Articles>('http://localhost/eatsmart-evann/evann-api-eatsmart/articles');
 
+  const messageData = await getObjet<Message>('https://jsonplaceholder.typicode.com/todos/1');
+
   const appDiv = document.querySelector<HTMLDivElement>('#app');
+
+  // const prix = articlesData.map(p => {
+  //     if (p.prix < 10) {
+  //       return `<strong><p>Prix : ${p.prix}€</p>
+  //               <p>Bon Plan</p></strong>
+  //               `
+  //     }else{
+  //       return `<strong><p>Prix : ${p.prix}€</p></strong>`
+  //     }
+  // });
 
   const listePlats = articlesData.map(p => 
   `<div class="card">
     <img id="img" src="${p.image}">
     <h3>${p.nom}</h3>
     <p>${p.description}</p>
-    <strong><p>Prix : ${p.prix}€</p></strong>
     <input type="button" class="btn-order" name="btn${p.id_article}" value="Ajouter">
+    <strong><p>Prix : ${p.prix}€</p></strong>
   </div>`
   ).join('');
 
   if (appDiv) {
     appDiv.innerHTML = `
     <header>
-      <h1 style="display:inline">EatSmart - Carte du Restaurant</h1>
+      <h1 style="display:inline">EatSmart - Carte du Restaurant ( ${articlesData.length} plats )</h1>
       <input type="search" id="search" name="search"/>
+      <p>Message du jour : ${messageData.title}</p>
     </header>
-    <div class="content-wrapper">
+    <div class="content-wrapper"> 
       <main class="menu-container">
         ${listePlats}
       </main>
