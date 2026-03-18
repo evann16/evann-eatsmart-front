@@ -40,6 +40,19 @@ async function init() {
       ${listePlats}
     </main>`
   }
+  
+  const tousLesBoutons = document.querySelectorAll<HTMLButtonElement>('.btn-order');
+
+  tousLesBoutons.forEach((btn, index) => {
+
+    btn.addEventListener('click', () => {
+      
+      console.log(`Bouton n°${index} cliqué ! Plat = ${articlesData[index].nom}`);
+    
+    });
+  
+  });
+
   const search = document.querySelector<HTMLInputElement>('#search');
 
   search?.addEventListener('input', () => {
