@@ -26,6 +26,7 @@ async function init() {
     <h3>${p.nom}</h3>
     <p>${p.description}</p>
     <strong><p>Prix : ${p.prix}€</p></strong>
+    <input type="button" class="btn-order" name="btn${p.id_article}" value="Ajouter">
   </div>`
   ).join('');
 
