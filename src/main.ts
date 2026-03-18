@@ -41,6 +41,8 @@ async function init() {
     </main>`
   }
   
+  let panier: Articles[] = [];
+
   const tousLesBoutons = document.querySelectorAll<HTMLButtonElement>('.btn-order');
 
   tousLesBoutons.forEach((btn, index) => {
@@ -48,6 +50,10 @@ async function init() {
     btn.addEventListener('click', () => {
       
       console.log(`Bouton n°${index} cliqué ! Plat = ${articlesData[index].nom}`);
+
+      panier.push(articlesData[index]);
+
+      console.log(`Panier = `, panier);
     
     });
   
