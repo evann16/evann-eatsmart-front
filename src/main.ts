@@ -15,6 +15,14 @@ interface Message {
   completed: boolean;
 }
 
+interface CommandeDTO {
+  id_commande: null;
+  date_commande: string; 
+  prix_total: number;
+  etat: string;
+}
+
+
 async function getTableau<T>(url: string): Promise<T[]> {
   const res = await fetch(url);
   return await res.json();
@@ -24,6 +32,7 @@ async function getObjet<O>(url: string): Promise<O> {
   const res = await fetch(url);
   return await res.json();
 }
+
 
 async function init() {
 
@@ -84,6 +93,10 @@ async function init() {
   }
   
   //Ajout d'un article dans le panier quand on clique sur un bouton
+  function calculerTotal(): number {
+    return panier.reduce((total, p) => total + Number(p.prix), 0);
+  }
+
   const tousLesBoutons = document.querySelectorAll<HTMLButtonElement>('.btn-order');
 
   tousLesBoutons.forEach((btn, index) => {
@@ -113,22 +126,35 @@ async function init() {
       //Calcul du total
       const panierTotal = document.querySelector<HTMLSpanElement>('#total-prix');
 
-      const totalHTML = panier.reduce((total, p) => total + Number(p.prix), 0).toFixed(2);
+      const totalHTML = calculerTotal().toFixed(2);
 
       if (panierTotal){
         panierTotal.innerHTML= `
           ${totalHTML} 
         `
       }
+
     });
   
   });
 
-  //Bouton valider la commande
+  //Valider la commande
   const valider = document.querySelector<HTMLInputElement>('#btn-valider');
 
   valider?.addEventListener('click', () => {
-    console.log(`Bouton Valider commande cliqué`);
+
+    const maintenant = new Date();
+    const dateMySQL = maintenant.toISOString().slice(0, 19).replace('T', ' ');
+
+    const nouvelleCommande: CommandeDTO = {
+      id_commande: null,
+      date_commande: dateMySQL,
+      prix_total: Number(calculerTotal().toFixed(2)),
+      etat: "en cours"
+    };
+
+    console.log(nouvelleCommande);
+
   });
 
   //Barre de recherche
