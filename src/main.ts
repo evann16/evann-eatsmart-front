@@ -82,6 +82,7 @@ async function init() {
 
   }
   
+  //Ajout d'un article dans le panier quand on clique sur un bouton
   const tousLesBoutons = document.querySelectorAll<HTMLButtonElement>('.btn-order');
 
   tousLesBoutons.forEach((btn, index) => {
@@ -104,14 +105,25 @@ async function init() {
 
       if (panierArticles){
         panierArticles.innerHTML= `
-          ${ajoutArticles} 
+          ${ajoutArticles}
         `
       }
-    
+
+      //Calcul du total
+      const panierTotal = document.querySelector<HTMLSpanElement>('#total-prix');
+
+      const totalHTML = panier.reduce((total, p) => total + Number(p.prix), 0).toFixed(2);
+
+      if (panierTotal){
+        panierTotal.innerHTML= `
+          ${totalHTML} 
+        `
+      }
     });
   
   });
 
+  //Barre de recherche
   const search = document.querySelector<HTMLInputElement>('#search');
 
   search?.addEventListener('input', () => {
