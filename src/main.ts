@@ -153,8 +153,27 @@ async function init() {
       etat: "en cours"
     };
 
-    console.log(nouvelleCommande);
+    async function envoyerDonnees(data: CommandeDTO) {
+        try {
+          const response = await fetch('http://localhost/eatsmart-evann/evann-api-eatsmart/commandes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
 
+        if (response.ok) {
+            const resultat = await response.json();
+            console.log("Succès :", resultat);
+        } else {
+            console.error("Erreur serveur :", response.status);
+        }
+        } catch (error) {
+            console.error("Erreur réseau :", error);
+        }
+    }
+
+    console.log(envoyerDonnees(nouvelleCommande));
+    
   });
 
   //Barre de recherche
